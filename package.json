@@ -1,0 +1,47 @@
+{
+  "name": "markdown-ext",
+  "displayName": "markdown-ext",
+  "description": "a markdown extension",
+  "version": "0.0.1",
+  "publisher": "jsm1003",
+  "engines": {
+    "vscode": "^1.20.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onLanguage:markdown"],
+  "contributes": {
+    "commands": [
+      {
+        "command": "issueBlog.upload",
+        "title": "upload blog"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.juejin",
+        "key": "shift+alt+b",
+        "when": "editorTextFocus && editorLangId == 'markdown'"
+      }
+    ]
+  },
+  "main": "./out/extension",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^7.0.43",
+    "@types/opn": "^5.1.0",
+    "tslint": "^5.8.0",
+    "typescript": "^2.7.1",
+    "vscode": "^1.1.6"
+  },
+  "dependencies": {
+    "github": "^13.1.0",
+    "opn": "^5.2.0"
+  }
+}
