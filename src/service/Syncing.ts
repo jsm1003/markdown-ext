@@ -66,13 +66,11 @@ export default class Syncing {
 
   // 将设置保存到本地
   public saveSettings(settings: ISyncingSettings): Promise<void> {
-    // 下面这个 promise 写的感觉不太好
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       const content = JSON.stringify(settings, null, 4) || '{}';
       fs.writeFile(this.settingsPath, content, err => {
-        console.log(err);
+        err ? reject(err) : resolve();
       });
-      resolve();
     });
   }
 
@@ -80,7 +78,6 @@ export default class Syncing {
   private _loadSettings(): ISyncingSettings {
     // 复制一个对象
     const settings: ISyncingSettings = { ...Syncing.DEFAUT_SETTING };
-
     try {
       Object.assign(settings, JSON.parse(fs.readFileSync(this.settingsPath, 'utf8')));
     } catch (err) {
