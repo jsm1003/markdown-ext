@@ -23,6 +23,7 @@ function _initGlobals(context: vscode.ExtensionContext) {
   _config = Config.create(context);
   _Syncing = Syncing.create(context);
   _Blog = Blog.create(context);
+  // _issueService = IssueService.create('cac1e3d64bb50b44eafaec915ce8501b9f50ac0b');
 }
 
 function _initCommands(context: vscode.ExtensionContext): void {
@@ -47,7 +48,6 @@ function _registerCommands(
 
 // 主要逻辑放到这里
 async function _uploadBlog() {
-  // 如果正在上传，就取消掉, 这一块的逻辑看能不能包装一下子，
   // _issueService.createIssue();
 
   if (_isSyncing) {
@@ -64,19 +64,14 @@ async function _uploadBlog() {
    */
 
   let settings = await _Syncing.prepareUpload();
-  let repoName = await Toast.showGithubRemoteRepoInputBox();
-  _issueService = IssueService.create(settings.token);
-  // 先象征性的试一次
-  // 关联已有 repo
 
-  // 这里的判断再想一下
-  if (!repoName) {
-    return;
-  }
-  await _issueService.createRepo(repoName);
+  console.log(settings);
+
+  _issueService = IssueService.create(settings.token);
+
+  _issueService.createRepo(settings.repoName);
 
   let blogOptions = _Blog.getBlog();
-
   if (!blogOptions) {
     return;
   }
@@ -84,8 +79,6 @@ async function _uploadBlog() {
 
   _isSyncing = false;
   console.log('上传成功');
-
-  // const api =
 }
 
 async function _openSettings() {}

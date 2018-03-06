@@ -24,15 +24,8 @@ export default class IssueService {
         token,
         type: 'oauth',
       });
-
-      this._initialize();
     }
     // 这里要判断一下如果有 token 才会
-  }
-
-  // 初始化
-  private async _initialize() {
-    this._owner = await this.getOwner();
   }
 
   public static create(token: string): IssueService {
@@ -56,7 +49,8 @@ export default class IssueService {
 
   // 创建一个仓库
   public async createRepo(remoteBlogRepo: string) {
-    this._remoteBlogRepo = 'test-issue';
+    // todo 需要判断一下
+    this._remoteBlogRepo = remoteBlogRepo;
     // let options: Github.ReposCreateParams = {
     //   name: remoteBlogRepo,
     // };
@@ -65,6 +59,8 @@ export default class IssueService {
   }
 
   public async createIssue(blog: BlogOptions) {
+    this._owner = this._owner || (await this.getOwner());
+
     const options: Github.IssuesCreateParams = {
       owner: this._owner,
       repo: this._remoteBlogRepo,
