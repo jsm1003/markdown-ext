@@ -1,6 +1,6 @@
-# pup-markdown README
+# markdown-issue-ext README
 
-This is the README for your extension "pup-markdown". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "markdown-issue-ext". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 
@@ -47,11 +47,11 @@ Fixed issue #.
 
 Added features X, Y, and Z.
 
------------------------------------------------------------------------------------------------------------
+---
 
 ## Working with Markdown
 
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+**Note:** You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
 
 * Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
 * Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
