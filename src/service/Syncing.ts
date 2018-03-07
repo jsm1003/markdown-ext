@@ -11,8 +11,8 @@ export interface ISyncingSettings {
    * store Github personal Access Token
    */
   token: string;
+  repoName: string;
   id?: string;
-  repoName?: string;
   owner?: string;
 }
 
@@ -25,6 +25,7 @@ export default class Syncing {
 
   private static readonly DEFAUT_SETTING: ISyncingSettings = {
     token: '',
+    repoName: ''
   };
 
   // 单例模式其实也是用了依赖注入的原理？ 因为他在这个类的构造函数中 实例化了其他类
@@ -45,18 +46,25 @@ export default class Syncing {
   // 准备上传， 把需要用户输入的东西东拿过来
   public async prepareUpload() {
     const settings: ISyncingSettings = this._loadSettings();
-    if (settings.token) {
-      return settings;
-    } else {
-      let token: { token: string };
-      token = await Toast.showGithubTokenInputBox();
-      let repoName = await Toast.showGithubRemoteRepoInputBox();
-
-      if (repoName) {
-      }
-
-      return token;
+    // 这里的逻辑不知道要怎么写一下
+    let saveFlag = false;
+    if (!settings.token || !settings.repoName) {
+      saveFlag = true;
     }
+
+    if (!settings.token) {
+      settings.token = await Toast.showGithubTokenInputBox();
+    }
+
+    if (!settings.repoName) {
+      settings.repoName = await Toast.showGithubRemoteRepoInputBox();
+    }
+
+    if (saveFlag) {
+      this.saveSettings(settings);
+    }
+
+    return settings;
   }
 
   // 初始化设置
@@ -66,6 +74,7 @@ export default class Syncing {
 
   // 将设置保存到本地
   public saveSettings(settings: ISyncingSettings): Promise<void> {
+    // 下面这个 promise 利用的不错， 把异步写入文件的方法用 promise 包装一下
     return new Promise((resolve, reject) => {
       const content = JSON.stringify(settings, null, 4) || '{}';
       fs.writeFile(this.settingsPath, content, err => {
