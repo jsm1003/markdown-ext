@@ -44,12 +44,13 @@ const Toast = {
 
     if (value) {
       const token = value.trim();
-      return { token };
+      return token;
     } else {
       throw new Error('无效的 token.');
     }
   },
 
+  //
   async showGithubRemoteRepoInputBox() {
     // 这里判断一下，是否创建一个新的 repo ，或者关联已有repo, 直接新建一个仓库
     const placeHolder = '输入远程仓库名';

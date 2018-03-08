@@ -72,8 +72,12 @@ export default class IssueService {
       // 创建成功后的提示消息放到这里也行， 放到外面也行
       console.log(result);
     } catch (err) {
-      console.log(err);
+      console.log(err.code);
     }
+  }
+
+  public async getAllIssue() {
+    let allIssues = this._api.issues.getAll({});
   }
 
   // 删除Issue

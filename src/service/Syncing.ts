@@ -23,9 +23,10 @@ export default class Syncing {
   private _env: Environment;
   private _settingsPath: string;
 
-  private static readonly DEFAUT_SETTING: ISyncingSettings = {
+  // 先不 readonly 呢
+  private static DEFAUT_SETTING: ISyncingSettings = {
     token: '',
-    repoName: ''
+    repoName: '',
   };
 
   // 单例模式其实也是用了依赖注入的原理？ 因为他在这个类的构造函数中 实例化了其他类
@@ -85,16 +86,31 @@ export default class Syncing {
 
   // 加载设置
   private _loadSettings(): ISyncingSettings {
-    // 复制一个对象
-    const settings: ISyncingSettings = { ...Syncing.DEFAUT_SETTING };
     try {
-      Object.assign(settings, JSON.parse(fs.readFileSync(this.settingsPath, 'utf8')));
+      Object.assign(
+        Syncing.DEFAUT_SETTING,
+        JSON.parse(fs.readFileSync(this.settingsPath, 'utf8')),
+      );
     } catch (err) {
       console.log(err);
     }
-    // 他这里还真是个问题
-    return settings;
-    // 返回值这里有问题，先待定
+    return Syncing.DEFAUT_SETTING;
+  }
+
+  public async clearGitHubToken() {
+    const settings: ISyncingSettings = this._loadSettings();
+    settings.token = '';
+    await this.saveSettings(settings);
+  }
+
+  public async clearGitHubRepoName() {
+    const settings: ISyncingSettings = this._loadSettings();
+    settings.repoName = '';
+    await this.saveSettings(settings);
+  }
+
+  public async clearSettings() {
+    await this.saveSettings(Syncing.DEFAUT_SETTING);
   }
 
   public get settingsPath(): string {

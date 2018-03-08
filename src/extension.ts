@@ -2,11 +2,13 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import * as fs from 'fs';
 import IssueService from './service/IssueService';
 import Config from './service/Config';
 import Syncing from './service/Syncing';
 import Toast from './service/Toast';
 import Blog from './service/Blog';
+import { openFile } from './utils/tools';
 
 let _isSyncing: boolean;
 let _Syncing: Syncing;
@@ -23,12 +25,14 @@ function _initGlobals(context: vscode.ExtensionContext) {
   _config = Config.create(context);
   _Syncing = Syncing.create(context);
   _Blog = Blog.create(context);
+
   // _issueService = IssueService.create('cac1e3d64bb50b44eafaec915ce8501b9f50ac0b');
 }
 
 function _initCommands(context: vscode.ExtensionContext): void {
-  _registerCommands(context, 'issueBlog.upload', _uploadBlog);
-  _registerCommands(context, 'issueBlog.openSettings', _openSettings);
+  _registerCommands(context, 'IssueBlog.upload', _uploadBlog);
+  _registerCommands(context, 'IssueBlog.openSettings', _openSettings);
+  _registerCommands(context, 'IssueBlog.clearSettings', _clearSettings);
 }
 
 /**
@@ -81,7 +85,18 @@ async function _uploadBlog() {
   console.log('上传成功');
 }
 
-async function _openSettings() {}
+async function _openSettings() {
+  if (fs.existsSync(_Syncing.settingsPath)) {
+    openFile(_Syncing.settingsPath);
+  } else {
+    await _Syncing.initSettings();
+    openFile(_Syncing.settingsPath);
+  }
+}
+
+async function _clearSettings() {
+  await _Syncing.clearSettings();
+}
 
 // this method is called when your extension is deactivated
 export function deactivate() {}
