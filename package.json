@@ -7,8 +7,12 @@
   "engines": {
     "vscode": "^1.20.0"
   },
-  "categories": ["Other"],
-  "activationEvents": ["onLanguage:markdown"],
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
   "contributes": {
     "commands": [
       {
@@ -43,14 +47,14 @@
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
-    "@types/node": "^7.0.43",
+    "@types/node": "^7.0.65",
     "@types/opn": "^5.1.0",
-    "tslint": "^5.8.0",
-    "typescript": "^2.7.1",
-    "vscode": "^1.1.6"
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.1",
+    "vscode": "^1.1.18"
   },
   "dependencies": {
-    "github": "^13.1.0",
-    "opn": "^5.2.0"
+    "@octokit/rest": "^15.8.1",
+    "opn": "^5.3.0"
   }
-}
+} 
