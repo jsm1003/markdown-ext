@@ -38,7 +38,9 @@ export default class IssueService {
   //
   public async getOwner() {
     try {
-      let { data: { login } } = await this._api.users.get({});
+      let {
+        data: { login },
+      } = await this._api.users.get({});
       return login;
     } catch (err) {
       console.log(err);

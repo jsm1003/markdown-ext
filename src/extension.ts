@@ -47,7 +47,9 @@ function _registerCommands(
   callback: (...args: any[]) => any,
 ): void {
   // 类似与观察者模式
-  context.subscriptions.push(vscode.commands.registerCommand(command, callback));
+  context.subscriptions.push(
+    vscode.commands.registerCommand(command, callback),
+  );
 }
 
 // 主要逻辑放到这里
