@@ -1,4 +1,4 @@
-import * as Github from 'github';
+import * as Github from '@octokit/rest';
 import * as vscode from 'vscode';
 import Blog from './Blog';
 

@@ -16,12 +16,12 @@ let _config: Config;
 let _issueService: IssueService;
 let _Blog: Blog;
 
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext): void {
   _initGlobals(context);
   _initCommands(context);
 }
 
-function _initGlobals(context: vscode.ExtensionContext) {
+function _initGlobals(context: vscode.ExtensionContext): void {
   _config = Config.create(context);
   _Syncing = Syncing.create(context);
   _Blog = Blog.create(context);
@@ -46,7 +46,6 @@ function _registerCommands(
   command: string,
   callback: (...args: any[]) => any,
 ): void {
-  // 类似与观察者模式
   context.subscriptions.push(
     vscode.commands.registerCommand(command, callback),
   );
@@ -64,14 +63,12 @@ async function _uploadBlog() {
   _isSyncing = true;
 
   /**
-   * 1. 拿到 token， ， 实例化IssueService
+   * 1. 拿到 token， 实例化IssueService
    * 2. 获取本地博客文章， 和远程repo名
    * 3. 上传
    */
 
   let settings = await _Syncing.prepareUpload();
-
-  console.log(settings);
 
   _issueService = IssueService.create(settings.token);
 

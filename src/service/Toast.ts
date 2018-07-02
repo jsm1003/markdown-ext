@@ -4,7 +4,6 @@ import IssueService from './IssueService';
 // 这里的问题还是不太明白
 const openUrl = require('opn');
 
-// 这里先不写成类
 // toast 主要管的功能就是 弹出框、提示信息等
 const Toast = {
   status(message: string, hideAfterTimeout?: number): void {
@@ -28,13 +27,12 @@ const Toast = {
     this.status(message, 12000);
   },
 
-  // 这里的 return 类型先不写呢
   async showGithubTokenInputBox() {
-    const placeHolder = 'Enter GitHub Personal Access Token.';
+    const placeholder = 'Enter GitHub Personal Access Token.';
     const options: vscode.InputBoxOptions = {
       ignoreFocusOut: true,
       password: false,
-      placeHolder,
+      placeholder,
       prompt: 'Used for upload blog',
     };
 
@@ -53,11 +51,11 @@ const Toast = {
   //
   async showGithubRemoteRepoInputBox() {
     // 这里判断一下，是否创建一个新的 repo ，或者关联已有repo, 直接新建一个仓库
-    const placeHolder = '输入远程仓库名';
+    const placeholder = 'Enter remote repo name';
     const options: vscode.InputBoxOptions = {
       ignoreFocusOut: true,
       password: false,
-      placeHolder,
+      placeholder,
       prompt: '用于提交issue用',
     };
 

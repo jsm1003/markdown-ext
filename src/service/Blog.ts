@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import * as Github from 'github';
+import * as Github from '@octokit/rest';
 
 export default class Blog {
   private static _instance: Blog;
